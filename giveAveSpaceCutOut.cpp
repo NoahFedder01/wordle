@@ -34,18 +34,35 @@ int main() {
 
     vector<Word> wordSet = initializeWithRatings("efficientSorted.txt");
 
-    int n = wordSet.size(), sum = 0;
+    cout << "What word would you like to check for the first guess?" << endl;
 
-    for (int i = 0; i < n; i++) {
-        sum += wordSet[i].rating;
+    string ans;
+
+    cin >> ans;
+
+    while (ans.size() != 5) {
+        cout << "The word must be five letters long, try again:" << endl;
+        cin >> ans;
     }
 
-    // Debug line bc I used n instead of i :-P
-    // cout << "Total sum is: " << sum << endl;
+    int n = wordSet.size(), selected = -1;
+    
+    for (int i = 0; i < n; i++) {
+        if (wordSet[i].word == ans) {
+            selected = i;
+            break;
+        }
+    }
 
-    sum /= n;
+    if (selected == -1) {
+        cout << "Error, word not found." << endl;
+        return 0;
+    }
 
-    cout << "On average, " << (1 - pow(0.5, sum)) * 100 << "% of the solution space is cut out." << endl;
+    // cout << "Word: " << wordSet[selected].word << ", rating: " << wordSet[selected].rating << endl;
+
+    cout << "With " << wordSet[selected].word << ", " << (1 - pow(0.5, wordSet[selected].rating)) * 100 << "% of the solution space is cut out on average on the first guess." << endl;
+
     
     return 0;
 }
